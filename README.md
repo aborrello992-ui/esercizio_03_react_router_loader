@@ -18,6 +18,8 @@ L'obiettivo dell'esercizio e creare una Single Page Application usando React Rou
 - simulazione della registrazione utente;
 - link `Posts` visibile solo se un utente e registrato.
 - bottone di logout per rimuovere l'utente registrato dal Context.
+- custom hook `useFetch`;
+- custom hook `useScroll`.
 
 ## Struttura principale
 
@@ -28,6 +30,9 @@ src/
 │   └── Navbar.jsx
 ├── context/
 │   └── UserContext.jsx
+├── hooks/
+│   ├── useFetch.js
+│   └── useScroll.js
 ├── routing/
 │   └── router.js
 ├── views/
@@ -58,11 +63,11 @@ Le altre rotte sono figlie della rotta principale tramite la proprieta `children
 
 ## Loader
 
-La pagina `PostsView` riceve i dati dal loader `postsLoader`.
+La pagina `PostsView` usa il custom hook `useFetch` per recuperare i post da JSONPlaceholder.
 
 La pagina `DetailView` riceve i dati dal loader `detailLoader`.
 
-In questo modo le chiamate API non vengono fatte direttamente dentro le view con `useEffect`, ma vengono gestite dalla configurazione delle rotte.
+In questo modo il progetto mostra sia l'utilizzo dei loader sia l'utilizzo dei custom hooks.
 
 ## Context utente
 
@@ -106,6 +111,34 @@ Quindi:
 
 - utente non registrato: vede Home, Login e Register;
 - utente registrato: vede anche Posts e Logout.
+
+## Custom hooks
+
+Il progetto contiene due custom hooks nella cartella `src/hooks`.
+
+### `useFetch`
+
+Il file `src/hooks/useFetch.js` contiene un hook che riceve un URL e delle dependencies, fa una chiamata API con `fetch` e restituisce direttamente `data`.
+
+La struttura e allineata alla lezione:
+
+```js
+useFetch(url, ...dependencies)
+```
+
+### `useScroll`
+
+Il file `src/hooks/useScroll.js` contiene un hook che legge la posizione verticale dello scroll e restituisce:
+
+- `scrollY`;
+- `ref`.
+
+Gli hook vengono usati in componenti reali del progetto:
+
+- `useFetch` viene usato in `PostsView` per caricare i post;
+- `useScroll` viene usato nella `Navbar` per cambiare stile quando l'utente scrolla la pagina.
+
+La `Homepage` contiene una sezione aggiuntiva che crea spazio verticale, cosi e possibile scrollare e vedere il cambio di stile della navbar.
 
 ## Comandi
 
