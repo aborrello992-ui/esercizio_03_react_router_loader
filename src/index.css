@@ -35,6 +35,26 @@ body {
   text-decoration: underline;
 }
 
+.navbar-user {
+  color: #202124;
+  font-size: 17px;
+  font-weight: 700;
+}
+
+.logout-button {
+  padding: 0;
+  border: 0;
+  background: transparent;
+  color: #c62828;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.logout-button:hover {
+  text-decoration: underline;
+}
+
 .page {
   width: min(90%, 860px);
   margin: 0 auto;
@@ -172,6 +192,26 @@ body {
   font-size: 16px;
   font-weight: 700;
   cursor: pointer;
+}
+
+.registered-card {
+  margin-top: 24px;
+  padding: 18px;
+  border: 1px solid #b6d4fe;
+  border-radius: 8px;
+  background-color: #eaf2ff;
+}
+
+.registered-title {
+  margin: 0 0 12px;
+  color: #1f6feb;
+  font-size: 22px;
+}
+
+.registered-card p {
+  margin: 8px 0;
+  color: #202124;
+  font-size: 17px;
 }
 
 @media (max-width: 640px) {
