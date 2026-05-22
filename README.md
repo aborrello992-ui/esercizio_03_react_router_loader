@@ -22,6 +22,9 @@ L'obiettivo dell'esercizio e creare una Single Page Application usando React Rou
 - custom hook `useScroll`.
 - Tailwind CSS per lo stile;
 - componenti daisyUI per navbar, card, bottoni, input e alert.
+- React Hook Form per gestire i form di Login e Register;
+- validazioni con `required` e `maxLength` sui campi dei form;
+- messaggi di errore visibili quando l'utente non rispetta le regole.
 
 ## Struttura principale
 
@@ -87,15 +90,45 @@ In questo modo tutti i componenti dell'app possono leggere i dati dell'utente re
 
 ## Registrazione simulata
 
-La vista `RegisterView` contiene un form controllato con:
+La vista `RegisterView` contiene un form gestito con React Hook Form:
 
 - nome;
 - email;
 - password.
 
-Al submit del form viene eseguito `e.preventDefault()` e i dati dell'utente vengono salvati nel Context tramite `registerUser`.
+Al submit del form, React Hook Form esegue `handleSubmit`.
+
+Se i dati sono validi, l'utente viene salvato nel Context tramite `registerUser`.
 
 La password viene usata solo per simulare il form e non viene salvata nel Context.
+
+## React Hook Form
+
+La libreria React Hook Form e stata installata con:
+
+```bash
+npm install react-hook-form
+```
+
+Nelle viste `RegisterView` e `LoginView` viene importato `useForm`:
+
+```js
+import { useForm } from 'react-hook-form'
+```
+
+`useForm` restituisce alcune funzionalita importanti:
+
+- `register`, per collegare gli input alla libreria;
+- `handleSubmit`, per gestire l'invio del form;
+- `reset`, per svuotare il form dopo un submit valido;
+- `errors`, per leggere gli errori di validazione.
+
+Ogni campo input ha queste regole:
+
+- `required`, quindi il campo non puo essere vuoto;
+- `maxLength: 50`, quindi il campo puo contenere al massimo 50 caratteri.
+
+Se l'utente non rispetta una regola, sotto l'input appare un messaggio di errore.
 
 ## Navbar condizionale
 
