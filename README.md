@@ -20,6 +20,8 @@ L'obiettivo dell'esercizio e creare una Single Page Application usando React Rou
 - bottone di logout per rimuovere l'utente registrato dal Context.
 - custom hook `useFetch`;
 - custom hook `useScroll`.
+- Tailwind CSS per lo stile;
+- componenti daisyUI per navbar, card, bottoni, input e alert.
 
 ## Struttura principale
 
@@ -139,6 +141,46 @@ Gli hook vengono usati in componenti reali del progetto:
 - `useScroll` viene usato nella `Navbar` per cambiare stile quando l'utente scrolla la pagina.
 
 La `Homepage` contiene una sezione aggiuntiva che crea spazio verticale, cosi e possibile scrollare e vedere il cambio di stile della navbar.
+
+## Tailwind CSS e daisyUI
+
+Il progetto usa Tailwind CSS con il plugin Vite ufficiale.
+
+Installazione usata:
+
+```bash
+npm install tailwindcss @tailwindcss/vite --force
+```
+
+Il flag `--force` e stato usato come indicato dalla traccia, per evitare i problemi della nuova versione di Vite durante l'installazione.
+
+Il progetto usa anche daisyUI:
+
+```bash
+npm install daisyui --force
+```
+
+Nel file `vite.config.js` e stato aggiunto il plugin Tailwind:
+
+```js
+import tailwindcss from '@tailwindcss/vite'
+```
+
+Nel file `src/index.css` sono presenti:
+
+```css
+@import "tailwindcss";
+@plugin "daisyui";
+```
+
+Sono stati usati componenti/classi daisyUI come:
+
+- `navbar`;
+- `btn`;
+- `card`;
+- `input`;
+- `alert`;
+- `hero`.
 
 ## Comandi
 

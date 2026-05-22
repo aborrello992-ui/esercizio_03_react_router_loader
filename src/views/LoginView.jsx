@@ -1,38 +1,36 @@
 function LoginView() {
   return (
-    <main className="page auth-page">
-      <section className="auth-panel">
-        <h1 className="page-title">Login</h1>
+    <main className="mx-auto w-11/12 max-w-xl pt-28 pb-16">
+      <section className="card bg-base-100 shadow-sm">
+        <div className="card-body">
+          <h1 className="card-title text-4xl text-primary">Login</h1>
 
-        <form className="auth-form">
-          <div className="form-field">
-            <label className="form-label" htmlFor="login-email">
-              Email
-            </label>
+        <form className="flex flex-col gap-5">
+          <label className="form-control w-full" htmlFor="login-email">
+            <span className="label-text mb-2 font-bold">Email</span>
             <input
-              className="form-input"
+              className="input input-primary w-full"
               id="login-email"
               type="email"
               placeholder="Inserisci la tua email"
             />
-          </div>
+          </label>
 
-          <div className="form-field">
-            <label className="form-label" htmlFor="login-password">
-              Password
-            </label>
+          <label className="form-control w-full" htmlFor="login-password">
+            <span className="label-text mb-2 font-bold">Password</span>
             <input
-              className="form-input"
+              className="input input-primary w-full"
               id="login-password"
               type="password"
               placeholder="Inserisci la password"
             />
-          </div>
+          </label>
 
-          <button className="form-button" type="submit">
+          <button className="btn btn-primary w-fit" type="submit">
             Accedi
           </button>
         </form>
+        </div>
       </section>
     </main>
   )

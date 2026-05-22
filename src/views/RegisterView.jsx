@@ -21,17 +21,16 @@ function RegisterView() {
   }
 
   return (
-    <main className="page auth-page">
-      <section className="auth-panel">
-        <h1 className="page-title">Register</h1>
+    <main className="mx-auto w-11/12 max-w-xl pt-28 pb-16">
+      <section className="card bg-base-100 shadow-sm">
+        <div className="card-body">
+        <h1 className="card-title text-4xl text-primary">Register</h1>
 
-        <form className="auth-form" onSubmit={handleSubmit}>
-          <div className="form-field">
-            <label className="form-label" htmlFor="register-name">
-              Nome
-            </label>
+        <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
+          <label className="form-control w-full" htmlFor="register-name">
+            <span className="label-text mb-2 font-bold">Nome</span>
             <input
-              className="form-input"
+              className="input input-primary w-full"
               id="register-name"
               type="text"
               value={name}
@@ -39,14 +38,12 @@ function RegisterView() {
               placeholder="Inserisci il tuo nome"
               required
             />
-          </div>
+          </label>
 
-          <div className="form-field">
-            <label className="form-label" htmlFor="register-email">
-              Email
-            </label>
+          <label className="form-control w-full" htmlFor="register-email">
+            <span className="label-text mb-2 font-bold">Email</span>
             <input
-              className="form-input"
+              className="input input-primary w-full"
               id="register-email"
               type="email"
               value={email}
@@ -54,14 +51,12 @@ function RegisterView() {
               placeholder="Inserisci la tua email"
               required
             />
-          </div>
+          </label>
 
-          <div className="form-field">
-            <label className="form-label" htmlFor="register-password">
-              Password
-            </label>
+          <label className="form-control w-full" htmlFor="register-password">
+            <span className="label-text mb-2 font-bold">Password</span>
             <input
-              className="form-input"
+              className="input input-primary w-full"
               id="register-password"
               type="password"
               value={password}
@@ -69,20 +64,21 @@ function RegisterView() {
               placeholder="Scegli una password"
               required
             />
-          </div>
+          </label>
 
-          <button className="form-button" type="submit">
+          <button className="btn btn-primary w-fit" type="submit">
             Registrati
           </button>
         </form>
 
         {user && (
-          <div className="registered-card">
-            <h2 className="registered-title">Utente registrato</h2>
+          <div className="alert alert-success mt-6 block">
+            <h2 className="font-bold">Utente registrato</h2>
             <p>Nome: {user.name}</p>
             <p>Email: {user.email}</p>
           </div>
         )}
+        </div>
       </section>
     </main>
   )

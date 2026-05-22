@@ -5,17 +5,21 @@ function PostsView() {
   const posts = useFetch('https://jsonplaceholder.typicode.com/posts')
 
   return (
-    <main className="page">
-      <h1 className="page-title">Posts</h1>
+    <main className="mx-auto w-11/12 max-w-5xl pt-28 pb-16">
+      <h1 className="mb-8 text-5xl font-bold text-primary">Posts</h1>
 
-      <section className="posts-grid">
+      <section className="grid gap-5">
         {posts.slice(0, 5).map((post) => (
-          <article className="post-card" key={post.id}>
-            <h2 className="post-title">{post.title}</h2>
-            <p className="post-body">{post.body}</p>
-            <Link className="button-link" to={`/posts/${post.id}`}>
-              Leggi dettaglio
-            </Link>
+          <article className="card bg-base-100 shadow-sm" key={post.id}>
+            <div className="card-body">
+              <h2 className="card-title capitalize">{post.title}</h2>
+              <p className="text-base-content/70">{post.body}</p>
+              <div className="card-actions justify-end">
+                <Link className="btn btn-primary" to={`/posts/${post.id}`}>
+                  Leggi dettaglio
+                </Link>
+              </div>
+            </div>
           </article>
         ))}
       </section>

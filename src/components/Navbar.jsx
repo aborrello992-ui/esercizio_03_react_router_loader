@@ -5,34 +5,43 @@ import useScroll from '../hooks/useScroll.js'
 function Navbar() {
   const { logoutUser, user } = useUserContext()
   const { ref, scrollY } = useScroll()
+  const navClass = scrollY > 0
+    ? 'navbar dark-navbar fixed top-0 z-10 px-6 transition-all'
+    : 'navbar bg-base-100 fixed top-0 z-10 px-6 shadow-sm transition-all'
 
   return (
-    <nav ref={ref} className={scrollY > 0 ? 'navbar dark-navbar' : 'navbar'}>
-      <NavLink className="navbar-link" to="/">
-        Home
-      </NavLink>
-
-      {user && (
-        <NavLink className="navbar-link" to="/posts">
-          Posts
+    <nav ref={ref} className={navClass}>
+      <div className="navbar-start">
+        <NavLink className="btn btn-ghost text-lg" to="/">
+          Home
         </NavLink>
-      )}
+      </div>
 
-      <NavLink className="navbar-link" to="/login">
-        Login
-      </NavLink>
-      <NavLink className="navbar-link" to="/register">
-        Register
-      </NavLink>
+      <div className="navbar-center gap-2">
+        {user && (
+          <NavLink className="btn btn-ghost" to="/posts">
+            Posts
+          </NavLink>
+        )}
 
-      {user && (
-        <>
-          <span className="navbar-user">Ciao, {user.name}</span>
-          <button className="logout-button" type="button" onClick={logoutUser}>
-            Logout
-          </button>
-        </>
-      )}
+        <NavLink className="btn btn-ghost" to="/login">
+          Login
+        </NavLink>
+        <NavLink className="btn btn-ghost" to="/register">
+          Register
+        </NavLink>
+      </div>
+
+      <div className="navbar-end gap-3">
+        {user && (
+          <>
+            <span className="font-bold">Ciao, {user.name}</span>
+            <button className="btn btn-error btn-sm" type="button" onClick={logoutUser}>
+              Logout
+            </button>
+          </>
+        )}
+      </div>
     </nav>
   )
 }
