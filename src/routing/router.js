@@ -7,6 +7,16 @@ import LoginView from '../views/LoginView.jsx'
 import PostsView from '../views/PostsView.jsx'
 import RegisterView from '../views/RegisterView.jsx'
 
+async function postsLoader() {
+  const response = await fetch('https://jsonplaceholder.typicode.com/posts')
+
+  if (!response.ok) {
+    throw new Error('Errore durante il caricamento dei post')
+  }
+
+  return response.json()
+}
+
 async function detailLoader({ params }) {
   const response = await fetch(
     `https://jsonplaceholder.typicode.com/posts/${params.postId}`,
@@ -31,6 +41,7 @@ const router = createBrowserRouter([
       {
         path: 'posts',
         element: createElement(PostsView),
+        loader: postsLoader,
       },
       {
         path: 'posts/:postId',

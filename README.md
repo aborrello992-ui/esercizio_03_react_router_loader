@@ -1,43 +1,47 @@
 # Esercizio 03 - React Router con Loader
 
-Questo progetto e stato creato con Vite e React.
+Questo progetto e stato sviluppato come selfwork didattico su React Router.
 
-L'obiettivo dell'esercizio e creare una Single Page Application usando React Router, rotte annidate e loader.
+L'obiettivo dell'esercizio e costruire una piccola Single Page Application con:
 
-## Features richieste
+- una rotta principale che renderizza `Layout`;
+- rotte figlie definite tramite `children`;
+- `Outlet` per mostrare le pagine annidate;
+- `loader` per spostare le chiamate API fuori dai componenti;
+- due viste `Login` e `Register` con form solo visivi.
+
+## Obiettivo didattico
+
+Questo esercizio serve a fissare le basi di React Router seguendo la consegna in modo fedele.
+
+Il focus non e su Context, autenticazione simulata, custom hooks o React Hook Form.
+Il focus e su:
+
+- `createBrowserRouter()`
+- rotta principale con `Layout`
+- proprieta `children`
+- componente `Outlet`
+- `loader`
+- `useLoaderData()`
+
+## Features richieste dalla traccia
 
 - cartella `routing`;
-- file `routing/router.js`;
+- file `src/routing/router.js`;
 - rotta principale con componente `Layout`;
-- rotte figlie tramite proprieta `children`;
-- viste `Homepage`, `PostsView`, `DetailView`, `LoginView` e `RegisterView`;
-- loader per recuperare i post da JSONPlaceholder;
-- loader per recuperare il dettaglio del singolo post;
-- form visibili per login e registrazione, senza action.
-- Context per salvare i dati dell'utente registrato;
-- simulazione della registrazione utente;
-- link `Posts` visibile solo se un utente e registrato.
-- bottone di logout per rimuovere l'utente registrato dal Context.
-- custom hook `useFetch`;
-- custom hook `useScroll`.
-- Tailwind CSS per lo stile;
-- componenti daisyUI per navbar, card, bottoni, input e alert.
-- React Hook Form per gestire i form di Login e Register;
-- validazioni con `required` e `maxLength` sui campi dei form;
-- messaggi di errore visibili quando l'utente non rispetta le regole.
+- rotte figlie tramite `children`;
+- viste `Homepage`, `PostsView`, `DetailView`, `LoginView`, `RegisterView`;
+- loader per la lista dei post;
+- loader per il dettaglio del singolo post;
+- form visibili per login e registrazione, senza logica reale.
 
-## Struttura principale
+## Struttura del progetto
 
 ```txt
 src/
 ├── components/
 │   ├── Layout.jsx
 │   └── Navbar.jsx
-├── context/
-│   └── UserContext.jsx
-├── hooks/
-│   ├── useFetch.js
-│   └── useScroll.js
 ├── routing/
 │   └── router.js
 ├── views/
@@ -62,175 +66,181 @@ Le rotte sono definite nel file `src/routing/router.js`.
 /register      -> RegisterView
 ```
 
-La rotta principale restituisce il componente `Layout`.
+La rotta principale restituisce `Layout`.
 
-Le altre rotte sono figlie della rotta principale tramite la proprieta `children`.
+Tutte le altre rotte sono figlie della rotta principale tramite la proprieta `children`.
 
-## Loader
+## Perche `router.js` usa `createElement`
 
-La pagina `PostsView` usa il custom hook `useFetch` per recuperare i post da JSONPlaceholder.
+La traccia richiedeva espressamente un file chiamato `router.js`.
 
-La pagina `DetailView` riceve i dati dal loader `detailLoader`.
-
-In questo modo il progetto mostra sia l'utilizzo dei loader sia l'utilizzo dei custom hooks.
-
-## Context utente
-
-Il file `src/context/UserContext.jsx` contiene:
-
-- `UserProvider`;
-- lo stato `user`;
-- la funzione `registerUser`;
-- la funzione `logoutUser`;
-- l'hook personalizzato `useUserContext`.
-
-Il `UserProvider` avvolge il `RouterProvider` nel file `src/main.jsx`.
-
-In questo modo tutti i componenti dell'app possono leggere i dati dell'utente registrato.
-
-## Registrazione simulata
-
-La vista `RegisterView` contiene un form gestito con React Hook Form:
-
-- nome;
-- email;
-- password.
-
-Al submit del form, React Hook Form esegue `handleSubmit`.
-
-Se i dati sono validi, l'utente viene salvato nel Context tramite `registerUser`.
-
-La password viene usata solo per simulare il form e non viene salvata nel Context.
-
-## React Hook Form
-
-La libreria React Hook Form e stata installata con:
-
-```bash
-npm install react-hook-form
-```
-
-Nelle viste `RegisterView` e `LoginView` viene importato `useForm`:
+Per mantenere il file con estensione `.js` ed evitare problemi con JSX diretto nel router, il progetto usa:
 
 ```js
-import { useForm } from 'react-hook-form'
+import { createElement } from 'react'
 ```
 
-`useForm` restituisce alcune funzionalita importanti:
+E poi:
 
-- `register`, per collegare gli input alla libreria;
-- `handleSubmit`, per gestire l'invio del form;
-- `reset`, per svuotare il form dopo un submit valido;
-- `errors`, per leggere gli errori di validazione.
+```js
+element: createElement(Layout)
+```
 
-Ogni campo input ha queste regole:
+Questa scelta e coerente con la lezione e con il vincolo del nome file richiesto dalla traccia.
 
-- `required`, quindi il campo non puo essere vuoto;
-- `maxLength: 50`, quindi il campo puo contenere al massimo 50 caratteri.
+## Layout e Outlet
 
-Se l'utente non rispetta una regola, sotto l'input appare un messaggio di errore.
+Il componente `Layout` contiene:
 
-## Navbar condizionale
+- la `Navbar`
+- il componente `Outlet`
 
-Il componente `Navbar` legge lo stato `user` dal Context.
-
-Il link `Posts` viene mostrato solo quando `user` esiste.
-
-Quando l'utente e registrato viene mostrato anche un bottone `Logout`.
-
-Al click su `Logout`, la funzione `logoutUser` imposta `user` a `null`.
-
-Di conseguenza il link `Posts` sparisce di nuovo.
+`Outlet` e il punto in cui React Router renderizza la rotta figlia attiva.
 
 Quindi:
 
-- utente non registrato: vede Home, Login e Register;
-- utente registrato: vede anche Posts e Logout.
+- su `/` viene mostrata `Homepage`
+- su `/posts` viene mostrata `PostsView`
+- su `/posts/:postId` viene mostrata `DetailView`
+- su `/login` viene mostrata `LoginView`
+- su `/register` viene mostrata `RegisterView`
 
-## Custom hooks
+## Loader
 
-Il progetto contiene due custom hooks nella cartella `src/hooks`.
+### Loader della lista post
 
-### `useFetch`
-
-Il file `src/hooks/useFetch.js` contiene un hook che riceve un URL e delle dependencies, fa una chiamata API con `fetch` e restituisce direttamente `data`.
-
-La struttura e allineata alla lezione:
-
-```js
-useFetch(url, ...dependencies)
-```
-
-### `useScroll`
-
-Il file `src/hooks/useScroll.js` contiene un hook che legge la posizione verticale dello scroll e restituisce:
-
-- `scrollY`;
-- `ref`.
-
-Gli hook vengono usati in componenti reali del progetto:
-
-- `useFetch` viene usato in `PostsView` per caricare i post;
-- `useScroll` viene usato nella `Navbar` per cambiare stile quando l'utente scrolla la pagina.
-
-La `Homepage` contiene una sezione aggiuntiva che crea spazio verticale, cosi e possibile scrollare e vedere il cambio di stile della navbar.
-
-## Tailwind CSS e daisyUI
-
-Il progetto usa Tailwind CSS con il plugin Vite ufficiale.
-
-Installazione usata:
-
-```bash
-npm install tailwindcss @tailwindcss/vite --force
-```
-
-Il flag `--force` e stato usato come indicato dalla traccia, per evitare i problemi della nuova versione di Vite durante l'installazione.
-
-Il progetto usa anche daisyUI:
-
-```bash
-npm install daisyui --force
-```
-
-Nel file `vite.config.js` e stato aggiunto il plugin Tailwind:
+Nel router e presente un loader dedicato ai post:
 
 ```js
-import tailwindcss from '@tailwindcss/vite'
+async function postsLoader() {
+  const response = await fetch('https://jsonplaceholder.typicode.com/posts')
+
+  if (!response.ok) {
+    throw new Error('Errore durante il caricamento dei post')
+  }
+
+  return response.json()
+}
 ```
 
-Nel file `src/index.css` sono presenti:
+### Loader del dettaglio
 
-```css
-@import "tailwindcss";
-@plugin "daisyui";
+Per la pagina di dettaglio viene usato un loader con parametro dinamico:
+
+```js
+async function detailLoader({ params }) {
+  const response = await fetch(
+    `https://jsonplaceholder.typicode.com/posts/${params.postId}`,
+  )
+
+  if (!response.ok) {
+    throw new Error('Errore durante il caricamento del dettaglio')
+  }
+
+  return response.json()
+}
 ```
 
-Sono stati usati componenti/classi daisyUI come:
+## useLoaderData
 
-- `navbar`;
-- `btn`;
-- `card`;
-- `input`;
-- `alert`;
-- `hero`.
+Le view leggono i dati del loader tramite `useLoaderData()`.
 
-## Comandi
+Esempi:
 
-Per installare le dipendenze:
+```js
+const posts = useLoaderData()
+```
+
+```js
+const post = useLoaderData()
+```
+
+In questo modo i componenti non devono piu gestire direttamente la fetch dentro `useEffect`.
+
+## Views
+
+### Homepage
+
+Mostra una breve introduzione al selfwork React Router.
+
+### PostsView
+
+Mostra i post ricevuti dal `postsLoader` e crea un link al dettaglio di ogni post.
+
+### DetailView
+
+Mostra il singolo post ottenuto dal `detailLoader` tramite `params.postId`.
+
+### LoginView
+
+Contiene un form visibile con:
+
+- email
+- password
+- bottone `Accedi`
+
+Il form non ha submit reale, come richiesto dalla consegna.
+
+### RegisterView
+
+Contiene un form visibile con:
+
+- nome
+- email
+- password
+- bottone `Registrati`
+
+Anche questo form e solo visivo.
+
+## Cosa e stato volutamente escluso
+
+Per restare coerenti con la traccia e con la lezione, in questa versione non abbiamo incluso:
+
+- Context utente
+- registrazione simulata
+- login simulato
+- logout
+- custom hooks per il recupero dati
+- React Hook Form
+- navbar condizionale in base a un utente salvato nello stato
+
+Questi elementi possono essere corretti in altri esercizi, ma non sono il cuore di questo selfwork.
+
+## Stile
+
+Il progetto usa:
+
+- Tailwind CSS
+- daisyUI
+
+per avere una struttura visiva semplice e leggibile.
+
+## API usata
+
+I dati arrivano da:
+
+- [JSONPlaceholder](https://jsonplaceholder.typicode.com/)
+
+## Avvio del progetto
+
+Installa le dipendenze:
 
 ```bash
 npm install
 ```
 
-Per avviare il progetto:
+Avvia il server di sviluppo:
 
 ```bash
 npm run dev
 ```
 
-Per verificare la build:
+Build di produzione:
 
 ```bash
 npm run build
 ```
+
+## Nota finale
+
+Questa versione del progetto e stata riallineata alla lezione in modo piu didattico, con una struttura piu semplice, piu leggibile e piu coerente con la consegna del selfwork React Router.

@@ -6,11 +6,12 @@ function Homepage() {
           <div>
             <p className="mb-3 font-bold uppercase text-primary">React Router</p>
             <h1 className="mb-5 text-5xl font-bold text-primary">
-              Single Page Application
+              Selfwork React Router
             </h1>
             <p className="text-xl leading-relaxed text-base-content/70">
-              Questo progetto usa rotte annidate, loader, Context e custom hooks per
-              navigare tra home, posts, dettaglio, login e registrazione.
+              In questa esercitazione usiamo una rotta principale con Layout,
+              rotte figlie annidate e i loader di React Router per recuperare i
+              dati prima del rendering delle pagine.
             </p>
           </div>
         </div>
@@ -18,10 +19,11 @@ function Homepage() {
 
       <section className="card bg-base-100 shadow-sm">
         <div className="card-body">
-          <h2 className="card-title text-2xl">Custom hook useScroll</h2>
+          <h2 className="card-title text-2xl">Obiettivo della consegna</h2>
           <p className="text-base-content/70">
-            Scorrendo questa pagina, la navbar cambia stile grazie al custom hook
-            <code className="mx-1 rounded bg-base-200 px-2 py-1">useScroll</code>.
+            La struttura prevede una homepage, una vista con la lista dei post,
+            una vista di dettaglio e due pagine dedicate ai form di login e
+            registrazione, visibili ma senza logica di submit.
           </p>
         </div>
       </section>

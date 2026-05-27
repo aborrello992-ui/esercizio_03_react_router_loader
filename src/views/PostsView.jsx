@@ -1,8 +1,7 @@
-import { Link } from 'react-router-dom'
-import useFetch from '../hooks/useFetch.js'
+import { Link, useLoaderData } from 'react-router-dom'
 
 function PostsView() {
-  const posts = useFetch('https://jsonplaceholder.typicode.com/posts')
+  const posts = useLoaderData()
 
   return (
     <main className="mx-auto w-11/12 max-w-5xl pt-28 pb-16">
