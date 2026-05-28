@@ -17,6 +17,9 @@ Questo esercizio serve a fissare le basi di React Router seguendo la consegna in
 Il focus non e su Context, autenticazione simulata, custom hooks o React Hook Form.
 Il focus e su:
 
+- `main.jsx`
+- `App.jsx`
+- `RouterProvider`
 - `createBrowserRouter()`
 - rotta principale con `Layout`
 - proprieta `children`
@@ -50,9 +53,24 @@ src/
 │   ├── LoginView.jsx
 │   ├── PostsView.jsx
 │   └── RegisterView.jsx
+├── App.jsx
 ├── index.css
 └── main.jsx
 ```
+
+## Ruolo di main.jsx e App.jsx
+
+La struttura corretta del progetto segue questa catena:
+
+```txt
+main.jsx -> App.jsx -> RouterProvider -> router.js
+```
+
+- `main.jsx` ha il compito di montare l'applicazione React
+- `App.jsx` contiene il `RouterProvider`
+- `router.js` definisce tutte le rotte
+
+Questa organizzazione e coerente con le convenzioni standard di React e rende il progetto piu manutenibile.
 
 ## Rotte
 
@@ -243,4 +261,4 @@ npm run build
 
 ## Nota finale
 
-Questa versione del progetto e stata riallineata alla lezione in modo piu didattico, con una struttura piu semplice, piu leggibile e piu coerente con la consegna del selfwork React Router.
+Questa versione del progetto e stata riallineata alla lezione in modo piu didattico, con una struttura piu semplice, piu leggibile e piu coerente con la consegna del selfwork React Router e con la convenzione corretta `main.jsx -> App.jsx -> router`.
